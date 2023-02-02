@@ -34,7 +34,7 @@ Route::get('/', function () {
 //ダッシュボードのルーティング
 Route::get('/dashboard', function () {
    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth:admin', 'verified'])->name('dashboard');
 
 // Route::middleware('auth')->group(function () {
 //    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -69,7 +69,7 @@ Route::middleware('guest')->group(function () {
       ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:admin')->group(function () {
    Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
       ->name('verification.notice');
 

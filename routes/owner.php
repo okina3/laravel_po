@@ -28,12 +28,12 @@ use App\Http\Controllers\Owner\Auth\VerifyEmailController;
 
 //welcomeページ
 Route::get('/', function () {
-   return view('welcome');
+   return view('owner.welcome');
 });
 
 //ダッシュボードのルーティング
 Route::get('/dashboard', function () {
-   return view('dashboard');
+   return view('owner.dashboard');
 })->middleware(['auth::owners', 'verified'])->name('dashboard');
 
 // Route::middleware('auth')->group(function () {

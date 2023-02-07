@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 // use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\OwnersController;
 
 
 
@@ -30,6 +31,11 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 Route::get('/', function () {
    return view('admin.welcome');
 });
+
+//管理者のルーティング
+Route::resource('owners', OwnersController::class)
+   ->middleware('auth:admin');
+
 
 //ダッシュボードのルーティング
 Route::get('/dashboard', function () {

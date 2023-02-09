@@ -12,7 +12,8 @@
 
                <section class="text-gray-600 body-font">
                   <div class="container px-5  mx-auto">
-
+                     {{-- フラッシュメッセージ --}}
+                     <x-flash-message status="info" />
                      {{-- 新規登録ボタン --}}
                      <div class="flex justify-end mb-4">
                         <button onclick="location.href='{{ route('admin.owners.create') }}'"

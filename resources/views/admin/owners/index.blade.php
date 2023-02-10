@@ -13,7 +13,7 @@
                <section class="text-gray-600 body-font">
                   <div class="container px-5  mx-auto">
                      {{-- フラッシュメッセージ --}}
-                     <x-flash-message status="info" />
+                     <x-flash-message status="session('status')" />
                      {{-- 新規登録ボタン --}}
                      <div class="flex justify-end mb-4">
                         <button onclick="location.href='{{ route('admin.owners.create') }}'"
@@ -38,6 +38,10 @@
                                  <th
                                     class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
                                  </th>
+
+                                 <th
+                                    class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+                                 </th>
                               </tr>
                            </thead>
                            <tbody>
@@ -54,6 +58,18 @@
                                           class="flex mx-auto text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded text-lg">編集
                                        </button>
                                     </td>
+                                    {{-- 削除ボタン --}}
+                                    <form id="delete_{{ $owner->id }}"
+                                       action="{{ route('admin.owners.destroy', ['owner' => $owner->id]) }}"
+                                       method="post">
+                                       @csrf
+                                       @method('delete')
+                                       <td class="px-4 py-3">
+                                          <a href="#" data-id="{{ $owner->id }}" onclick="deletePost(this)"
+                                             class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded text-lg">削除
+                                          </a>
+                                       </td>
+                                    </form>
                                  </tr>
                               @endforeach
                            </tbody>
@@ -66,4 +82,14 @@
          </div>
       </div>
    </div>
+
+   <script>
+      function deletePost(e) {
+         'use strict';
+         if (confirm('本当に削除してもいいですか?')) {
+            document.getElementById('delete_' + e.dataset.id).submit();
+         }
+      }
+   </script>
+
 </x-app-layout>

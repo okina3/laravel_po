@@ -12,12 +12,12 @@ use Illuminate\Validation\Rules;
 
 class OwnersController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth:admin');
     }
 
+    //一覧表示の処理--------------------------------------------------------
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +30,7 @@ class OwnersController extends Controller
         return view('admin.owners.index', compact('owners'));
     }
 
+    //新規登録の処理--------------------------------------------------------
     /**
      * Show the form for creating a new resource.
      *
@@ -40,6 +41,7 @@ class OwnersController extends Controller
         return view('admin.owners.create');
     }
 
+    // 保存の処理----------------------------------------------------------
     /**
      * Store a newly created resource in storage.
      *
@@ -62,9 +64,13 @@ class OwnersController extends Controller
 
         return redirect()
             ->route('admin.owners.index')
-            ->with('message', 'オーナー登録を実施しました。');
+            ->with([
+                'message' => 'オーナー登録を実施しました。',
+                'status' => 'info'
+            ]);
     }
 
+    // 詳細の処理----------------------------------------------------------
     /**
      * Display the specified resource.
      *
@@ -76,12 +82,14 @@ class OwnersController extends Controller
     //     //
     // }
 
+    // 編集の処理----------------------------------------------------------
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function edit($id)
     {
         $owner = Owner::findOrFail($id);
@@ -89,6 +97,7 @@ class OwnersController extends Controller
         return view('admin.owners.edit', compact('owner'));
     }
 
+    // 更新の処理----------------------------------------------------------
     /**
      * Update the specified resource in storage.
      *
@@ -96,7 +105,7 @@ class OwnersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // 更新の処理
+
     public function update(Request $request, $id)
     {
         $owner = Owner::findOrFail($id);
@@ -108,9 +117,13 @@ class OwnersController extends Controller
 
         return redirect()
             ->route('admin.owners.index')
-            ->with('message', 'オーナー情報を更新しました。');
+            ->with([
+                'message' => 'オーナー情報を更新しました。',
+                'status' => 'info'
+            ]);
     }
 
+    //削除の処理----------------------------------------------------------
     /**
      * Remove the specified resource from storage.
      *
@@ -119,6 +132,13 @@ class OwnersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Owner::findOrFail($id)->delete(); //ソフトデリート
+
+        return redirect()
+            ->route('admin.owners.index')
+            ->with([
+                'message' => 'オーナー情報を削除しました。',
+                'status' => 'alert'
+            ]);
     }
 }

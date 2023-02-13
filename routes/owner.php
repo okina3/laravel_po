@@ -34,7 +34,7 @@ Route::get('/', function () {
 //ダッシュボードのルーティング
 Route::get('/dashboard', function () {
    return view('owner.dashboard');
-})->middleware(['auth::owners', 'verified'])->name('dashboard');
+})->middleware(['auth:owners', 'verified'])->name('dashboard');
 
 // Route::middleware('auth')->group(function () {
 //    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

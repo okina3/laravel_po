@@ -27,14 +27,15 @@ use App\Http\Controllers\Admin\OwnersController;
 |
 */
 
+//管理者は一人なので、新規登録できないように、welcomeページをコメントアウト
 //welcomeページ
-Route::get('/', function () {
-   return view('admin.welcome');
-});
+// Route::get('/', function () {
+//    return view('admin.welcome');
+// });
 
 //管理者のルーティング
 Route::resource('owners', OwnersController::class)
-   ->middleware('auth:admin');
+   ->middleware('auth:admin')->except(['show']);
 
 //期限切れオーナーのルーティング
 Route::prefix('expired-owners')->middleware('auth:admin')->group(function () {

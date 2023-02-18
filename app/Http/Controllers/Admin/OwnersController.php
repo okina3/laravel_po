@@ -89,7 +89,7 @@ class OwnersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function edit($id)
     {
         $owner = Owner::findOrFail($id);
@@ -140,5 +140,20 @@ class OwnersController extends Controller
                 'message' => 'オーナー情報を削除しました。',
                 'status' => 'alert'
             ]);
+    }
+
+    //期限切れオーナーの完全消去
+    public function expiredOwnerIndex()
+    {
+        $expiredOwners = Owner::onlyTrashed()->get();
+        return view(
+            'admin.expired-owners',
+            compact('expiredOwners')
+        );
+    }
+    public function expiredOwnerDestroy($id)
+    {
+        Owner::onlyTrashed()->findOrFail($id)->forceDelete();
+        return redirect()->route('admin.expired-owners.index');
     }
 }
